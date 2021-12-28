@@ -2,10 +2,20 @@ package labs_examples.objects_classes_methods.labs.oop.D_my_oop;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * class containing the main method, and other operational methods
+ */
 public class TwoWeeksInThailand {
 
+    /**
+     * method which returns type of transportation
+     *
+     * @param i
+     * @return
+     */
     public static String getTransport(int i) {
         switch (i) {
             case 1:
@@ -16,6 +26,13 @@ public class TwoWeeksInThailand {
                 return "PLANE";
         }
     }
+
+    /**
+     * method that returns budget choice
+     *
+     * @param i
+     * @return
+     */
     public static String getBudget(int i) {
         switch (i) {
             case 1:
@@ -26,15 +43,29 @@ public class TwoWeeksInThailand {
                 return "$801+ ($$$) : ~$58+/day";
         }
     }
+
+    /**
+     * method that returns accommodation based on budget
+     *
+     * @param i
+     * @return
+     */
     public static String getAccommodation(int i) {
         String[] accoms = new String[]{"BACKPACKER HOSTELS", "GUESTHOUSES", "MID-RANGE HOTELS"};
-        switch(i) {
-            case 1 : return accoms[0];
-            case 2 : return accoms[1];
-            default: return accoms[2];
+        switch (i) {
+            case 1:
+                return accoms[0];
+            case 2:
+                return accoms[1];
+            default:
+                return accoms[2];
         }
 
     }
+
+    /**
+     * class that preloads destinations and takes in client input
+     */
     public static void clientCreator() {
         Scanner scanner = new Scanner(System.in);
         Destination bangkok = new Destination("BANGKOK", "TEMPLES, ART & MUSEUMS, STREET FOOD", "SOUTHERN", "THE BUSTLING AND LIVELY CAPITAL CITY.");
@@ -67,31 +98,67 @@ public class TwoWeeksInThailand {
         System.out.println("4. " + destinations.get(3).getActivities());
         System.out.println("5. " + destinations.get(4).getActivities());
 
-        int firstChoice = scanner.nextInt();
-        while (firstChoice < 1 || firstChoice > 5) {
-            System.out.println("Invalid entry, please enter a choice from the list..");
-            firstChoice = scanner.nextInt();
+        boolean validInput = true;
+        int firstChoice = 0;
+        while (validInput) {
+            try {
+                firstChoice = scanner.nextInt();
+                while (firstChoice < 1 || firstChoice > 5) {
+                    System.out.println("Invalid entry, please enter a choice from the list..");
+                    firstChoice = scanner.nextInt();
+                }
+                validInput = false;
+            } catch (InputMismatchException e) {
+                System.out.println("Entry not recognized, please enter a number:");
+                scanner.next();
+            }
         }
+
         System.out.println("Please add your second activity set....");
-        int secondChoice = scanner.nextInt();
-        while (secondChoice < 1 || secondChoice > 5) {
-            System.out.println("Invalid entry, please enter a choice from the list..");
-            secondChoice = scanner.nextInt();
+
+
+        int secondChoice = 0;
+        while (!validInput) {
+            try {
+                secondChoice = scanner.nextInt();
+                while (secondChoice < 1 || secondChoice > 5) {
+                    System.out.println("Invalid entry, please enter a choice from the list..");
+                    secondChoice = scanner.nextInt();
+                }
+                while (secondChoice == firstChoice) {
+                    System.out.println("Activity set already selected, please enter another activity set...");
+                    secondChoice = scanner.nextInt();
+                }
+                validInput = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Entry not recognized, please select from the list:");
+                scanner.next();
+            }
         }
-        while (secondChoice == firstChoice) {
-            System.out.println("Activity set already selected, please enter another activity set...");
-            secondChoice = scanner.nextInt();
-       }
+
         System.out.println("Please add your third activity set....");
-        int thirdChoice = scanner.nextInt();
-        while (thirdChoice < 1 || thirdChoice > 5) {
-            System.out.println("Invalid entry, please enter a choice from the list..");
-            thirdChoice = scanner.nextInt();
+
+
+        int thirdChoice = 0;
+        while (validInput) {
+            try {
+                thirdChoice = scanner.nextInt();
+                while (thirdChoice < 1 || thirdChoice > 5) {
+                    System.out.println("Invalid entry, please enter a choice from the list..");
+                    thirdChoice = scanner.nextInt();
+                }
+                while (thirdChoice == secondChoice || thirdChoice == firstChoice) {
+                    System.out.println("Activity set already selected, please enter another activity set...");
+                    thirdChoice = scanner.nextInt();
+                }
+                validInput = false;
+            } catch (InputMismatchException e) {
+                System.out.println("Entry not recognized, choose a number from the list:");
+                scanner.next();
+            }
         }
-        while (thirdChoice == secondChoice || thirdChoice == firstChoice) {
-            System.out.println("Activity set already selected, please enter another activity set...");
-            thirdChoice = scanner.nextInt();
-        }
+
+
         System.out.println("---------------------------------");
         String[] choices = new String[3];
         System.out.println("You've selected....");
@@ -156,11 +223,23 @@ public class TwoWeeksInThailand {
         System.out.println("1." + getBudget(1));
         System.out.println("2." + getBudget(2));
         System.out.println("3." + getBudget(3));
-        int budget = scanner.nextInt();
-        while (budget < 1 || budget > 3) {
-            System.out.println("Invalid entry, please select a budget from 1-3....");
-            budget = scanner.nextInt();
+
+
+        int budget = 0;
+        while (!validInput) {
+            try {
+                budget = scanner.nextInt();
+                while (budget < 1 || budget > 3) {
+                    System.out.println("Option not available, please select a budget from 1-3....");
+                    budget = scanner.nextInt();
+                }
+                validInput = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid entry, select a number from the list:");
+                scanner.next();
+            }
         }
+
 
         System.out.println("-----------------------------");
         System.out.println("Based on your budget, the best transportation method for you is... " + getTransport(budget));

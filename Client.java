@@ -1,5 +1,8 @@
 package labs_examples.objects_classes_methods.labs.oop.D_my_oop;
 
+/**
+ * class which creates objects holding client information
+ */
 public class Client {
     private String name;
     private String email;
@@ -11,14 +14,6 @@ public class Client {
         this.email = email;
         this.budget = budget;
         this.activities = activities;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

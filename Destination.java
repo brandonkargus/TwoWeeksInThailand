@@ -1,5 +1,8 @@
 package labs_examples.objects_classes_methods.labs.oop.D_my_oop;
 
+/**
+ * class which creates objects holding destination information
+ */
 public class Destination {
     private String name;
     private String activities;
@@ -21,10 +24,6 @@ public class Destination {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getPartOfCountry() {
